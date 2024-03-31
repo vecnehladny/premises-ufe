@@ -7,12 +7,9 @@ describe('vecnehladny-premises-wl-list', () => {
       components: [VecnehladnyPremisesWlList],
       html: `<vecnehladny-premises-wl-list></vecnehladny-premises-wl-list>`,
     });
-    expect(page.root).toEqualHtml(`
-      <vecnehladny-premises-wl-list>
-        <mock:shadow-root>
-          <slot></slot>
-        </mock:shadow-root>
-      </vecnehladny-premises-wl-list>
-    `);
+    const wlList = page.rootInstance as VecnehladnyPremisesWlList;
+    const expectedPremises = wlList?.premises?.length
+    const items = page.root.shadowRoot.querySelectorAll("md-list-item");
+    expect(items.length).toEqual(expectedPremises);
   });
 });
