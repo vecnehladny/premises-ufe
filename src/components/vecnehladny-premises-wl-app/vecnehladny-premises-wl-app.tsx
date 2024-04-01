@@ -56,7 +56,7 @@ export class VecnehladnyPremisesWlApp {
         ? <vecnehladny-premises-wl-editor entry-id={entryId}
             oneditor-closed={ () => navigate("./list")} >
           </vecnehladny-premises-wl-editor>
-        : <vecnehladny-premises-wl-list></vecnehladny-premises-wl-list>
+        : <vecnehladny-premises-wl-list onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></vecnehladny-premises-wl-list>
         }
   
       </Host>
