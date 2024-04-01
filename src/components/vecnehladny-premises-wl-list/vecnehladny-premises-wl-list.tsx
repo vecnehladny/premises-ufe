@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Event, EventEmitter,  Host, h } from '@stencil/core';
 
 @Component({
   tag: 'vecnehladny-premises-wl-list',
@@ -6,6 +6,8 @@ import { Component, Host, h } from '@stencil/core';
   shadow: true,
 })
 export class VecnehladnyPremisesWlList {
+
+  @Event({ eventName: "entry-clicked"}) entryClicked: EventEmitter<string>;
 
   premises: any[];
 
@@ -41,8 +43,8 @@ export class VecnehladnyPremisesWlList {
     return (
       <Host>
         <md-list>
-          {this.premises.map(premise =>
-            <md-list-item>
+          {this.premises.map((premise, index) =>
+            <md-list-item onClick={ () => this.entryClicked.emit(index.toString())}>
               <div slot="headline">{premise.name}</div>
               <div slot="supporting-text">{"Predpokladaný vstup: " + this.isoDateToLocale(premise.estimatedStart)}</div>
                 <md-icon slot="start">{premise.icon}</md-icon>

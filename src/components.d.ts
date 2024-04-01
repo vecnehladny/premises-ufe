@@ -6,10 +6,34 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface VecnehladnyPremisesWlEditor {
+        "premiseId": string;
+    }
     interface VecnehladnyPremisesWlList {
     }
 }
+export interface VecnehladnyPremisesWlEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLVecnehladnyPremisesWlEditorElement;
+}
 declare global {
+    interface HTMLVecnehladnyPremisesWlEditorElementEventMap {
+        "editor-closed": string;
+    }
+    interface HTMLVecnehladnyPremisesWlEditorElement extends Components.VecnehladnyPremisesWlEditor, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLVecnehladnyPremisesWlEditorElementEventMap>(type: K, listener: (this: HTMLVecnehladnyPremisesWlEditorElement, ev: VecnehladnyPremisesWlEditorCustomEvent<HTMLVecnehladnyPremisesWlEditorElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLVecnehladnyPremisesWlEditorElementEventMap>(type: K, listener: (this: HTMLVecnehladnyPremisesWlEditorElement, ev: VecnehladnyPremisesWlEditorCustomEvent<HTMLVecnehladnyPremisesWlEditorElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLVecnehladnyPremisesWlEditorElement: {
+        prototype: HTMLVecnehladnyPremisesWlEditorElement;
+        new (): HTMLVecnehladnyPremisesWlEditorElement;
+    };
     interface HTMLVecnehladnyPremisesWlListElement extends Components.VecnehladnyPremisesWlList, HTMLStencilElement {
     }
     var HTMLVecnehladnyPremisesWlListElement: {
@@ -17,13 +41,19 @@ declare global {
         new (): HTMLVecnehladnyPremisesWlListElement;
     };
     interface HTMLElementTagNameMap {
+        "vecnehladny-premises-wl-editor": HTMLVecnehladnyPremisesWlEditorElement;
         "vecnehladny-premises-wl-list": HTMLVecnehladnyPremisesWlListElement;
     }
 }
 declare namespace LocalJSX {
+    interface VecnehladnyPremisesWlEditor {
+        "onEditor-closed"?: (event: VecnehladnyPremisesWlEditorCustomEvent<string>) => void;
+        "premiseId"?: string;
+    }
     interface VecnehladnyPremisesWlList {
     }
     interface IntrinsicElements {
+        "vecnehladny-premises-wl-editor": VecnehladnyPremisesWlEditor;
         "vecnehladny-premises-wl-list": VecnehladnyPremisesWlList;
     }
 }
@@ -31,6 +61,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "vecnehladny-premises-wl-editor": LocalJSX.VecnehladnyPremisesWlEditor & JSXBase.HTMLAttributes<HTMLVecnehladnyPremisesWlEditorElement>;
             "vecnehladny-premises-wl-list": LocalJSX.VecnehladnyPremisesWlList & JSXBase.HTMLAttributes<HTMLVecnehladnyPremisesWlListElement>;
         }
     }
