@@ -8,7 +8,7 @@ describe('vecnehladny-premises-wl-list', () => {
       html: `<vecnehladny-premises-wl-list></vecnehladny-premises-wl-list>`,
     });
     const wlList = page.rootInstance as VecnehladnyPremisesWlList;
-    const expectedPremises = wlList?.premises?.length
+    const expectedPremises = wlList?.rooms?.length
     const items = page.root.shadowRoot.querySelectorAll("md-list-item");
     expect(items.length).toEqual(expectedPremises);
   });

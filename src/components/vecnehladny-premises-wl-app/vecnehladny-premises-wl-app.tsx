@@ -12,8 +12,9 @@ declare global {
 export class VecnehladnyPremisesWlApp {
 
   @State() private relativePath = "";
-
   @Prop() basePath: string="";
+  @Prop() apiBase: string;
+  @Prop() buildingId: string;
 
    componentWillLoad() {
      const baseUri = new URL(this.basePath, document.baseURI || "/").pathname;
@@ -56,7 +57,7 @@ export class VecnehladnyPremisesWlApp {
         ? <vecnehladny-premises-wl-editor entry-id={entryId}
             oneditor-closed={ () => navigate("./list")} >
           </vecnehladny-premises-wl-editor>
-        : <vecnehladny-premises-wl-list onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></vecnehladny-premises-wl-list>
+        : <vecnehladny-premises-wl-list building-id={this.buildingId} api-base={this.apiBase} onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></vecnehladny-premises-wl-list>
         }
   
       </Host>

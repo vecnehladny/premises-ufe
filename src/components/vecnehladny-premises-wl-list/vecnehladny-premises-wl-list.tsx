@@ -1,4 +1,5 @@
-import { Component, Event, EventEmitter,  Host, h } from '@stencil/core';
+import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
+import { RoomsListApiFactory, RoomEntry} from '../../api/premises-wl';
 
 @Component({
   tag: 'vecnehladny-premises-wl-list',
@@ -8,56 +9,49 @@ import { Component, Event, EventEmitter,  Host, h } from '@stencil/core';
 export class VecnehladnyPremisesWlList {
 
   @Event({ eventName: "entry-clicked"}) entryClicked: EventEmitter<string>;
+  @Prop() apiBase: string;
+  @Prop() buildingId: string;
+  @State() errorMessage: string;
 
-  premises: any[];
+  rooms: RoomEntry[];
 
-  private async getPremisesAsync(){
-    return await Promise.resolve(
-      [{
-          name: 'Ambulancia',
-          premiseId: '10001',
-          since: new Date(Date.now() - 10 * 60).toISOString(),
-          estimatedStart: new Date(Date.now() + 65 * 60).toISOString(),
-          icon: 'admin_meds'
-      }, {
-          name: 'Liečebňa',
-          premiseId: '10096',
-          since: new Date(Date.now() - 30 * 60).toISOString(),
-          estimatedStart: new Date(Date.now() + 30 * 60).toISOString(),
-          icon: 'single_bed'
-      }, {
-          name: 'Ordinácia',
-          premiseId: '10028',
-          since: new Date(Date.now() - 72 * 60).toISOString(),
-          estimatedStart: new Date(Date.now() + 5 * 60).toISOString(),
-          icon: 'stethoscope'
-      }]
-    );
+  private async getRoomsAsync(): Promise<RoomEntry[]>{
+    try {
+      const response = await
+      RoomsListApiFactory(undefined, this.apiBase).
+      getRoomList(this.buildingId)
+      if (response.status < 299) {
+        return response.data;
+      } else {
+        this.errorMessage = `Cannot retrieve list: ${response.statusText}`
+      }
+    } catch (err: any) {
+      this.errorMessage = `Cannot retrieve list: ${err.message || "unknown"}`
+    }
+    return [];
   }
 
   async componentWillLoad() {
-    this.premises = await this.getPremisesAsync();
+    this.rooms = await this.getRoomsAsync();
   }
 
   render() {
     return (
       <Host>
+        {this.errorMessage
+        ? <div class="error">{this.errorMessage}</div>
+        :
         <md-list>
-          {this.premises.map((premise, index) =>
+          {this.rooms.map((room, index) =>
             <md-list-item onClick={ () => this.entryClicked.emit(index.toString())}>
-              <div slot="headline">{premise.name}</div>
-              <div slot="supporting-text">{"Predpokladaný vstup: " + this.isoDateToLocale(premise.estimatedStart)}</div>
-                <md-icon slot="start">{premise.icon}</md-icon>
+              <div slot="headline">{room.id}</div>
+              <div slot="supporting-text">{room.status}</div>
             </md-list-item>
           )}
         </md-list>
+         }
       </Host>
     );
-  }
-
-  private isoDateToLocale(iso:string) {
-    if(!iso) return '';
-    return new Date(Date.parse(iso)).toLocaleTimeString()
   }
 
 }
