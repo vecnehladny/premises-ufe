@@ -54,7 +54,7 @@ export class VecnehladnyPremisesWlApp {
     return (
       <Host>
         { element === "editor"
-        ? <vecnehladny-premises-wl-editor entry-id={entryId}
+        ? <vecnehladny-premises-wl-editor entry-id={entryId} building-id={this.buildingId} api-base={this.apiBase}
             oneditor-closed={ () => navigate("./list")} >
           </vecnehladny-premises-wl-editor>
         : <vecnehladny-premises-wl-list building-id={this.buildingId} api-base={this.apiBase} onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></vecnehladny-premises-wl-list>

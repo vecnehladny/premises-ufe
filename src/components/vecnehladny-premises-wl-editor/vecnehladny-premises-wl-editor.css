@@ -1,11 +1,15 @@
 :host {
   --_wl-editor_gap: var(--wl-gap, 0.5rem);
-
-  display: flex;
-  flex-direction: column;
-  gap: var(--_wl-editor_gap);
-  padding: var(--_wl-editor_gap);
+  height: 100%;
 }
+
+form {
+  margin: auto;
+  color: red;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  }
 
 .duration-slider {
   display: flex;

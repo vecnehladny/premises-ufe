@@ -42,14 +42,18 @@ export class VecnehladnyPremisesWlList {
         ? <div class="error">{this.errorMessage}</div>
         :
         <md-list>
-          {this.rooms.map((room, index) =>
-            <md-list-item onClick={ () => this.entryClicked.emit(index.toString())}>
+          {this.rooms.map((room) =>
+            <md-list-item onClick={ () => this.entryClicked.emit(room.id)}>
               <div slot="headline">{room.id}</div>
               <div slot="supporting-text">{room.status}</div>
             </md-list-item>
           )}
         </md-list>
          }
+         <md-filled-icon-button class="add-button"
+       onclick={() => this.entryClicked.emit("@new")}>
+       <md-icon>add</md-icon>
+     </md-filled-icon-button>
       </Host>
     );
   }

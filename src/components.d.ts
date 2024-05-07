@@ -12,7 +12,9 @@ export namespace Components {
         "buildingId": string;
     }
     interface VecnehladnyPremisesWlEditor {
-        "premiseId": string;
+        "apiBase": string;
+        "buildingId": string;
+        "roomId": string;
     }
     interface VecnehladnyPremisesWlList {
         "apiBase": string;
@@ -81,8 +83,10 @@ declare namespace LocalJSX {
         "buildingId"?: string;
     }
     interface VecnehladnyPremisesWlEditor {
+        "apiBase"?: string;
+        "buildingId"?: string;
         "onEditor-closed"?: (event: VecnehladnyPremisesWlEditorCustomEvent<string>) => void;
-        "premiseId"?: string;
+        "roomId"?: string;
     }
     interface VecnehladnyPremisesWlList {
         "apiBase"?: string;
