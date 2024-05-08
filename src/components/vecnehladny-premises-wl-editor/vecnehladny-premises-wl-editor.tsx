@@ -67,6 +67,10 @@ export class VecnehladnyPremisesWlEditor {
     }
     return (
       <Host>
+        {this.roomId === "@new"
+        ? <h1>Add Room</h1>
+        : <h1>Edit Room</h1>
+        }
         <form ref={el => this.formElement = el}>
           <md-filled-text-field label="Room Type"
             required value={this.room?.type}
@@ -88,19 +92,20 @@ export class VecnehladnyPremisesWlEditor {
         </form>
 
         <div class="actions">
-          <md-tonal-button id="delete" disabled={!this.room || this.room?.id === "@new"}
-            onClick={() => this.deleteRoom()} >
-            <md-icon slot="icon">delete</md-icon>
-            Delete
-          </md-tonal-button>
+        {(this.room && this.room.id !== "@new") && (
+          <md-filled-tonal-button id="delete" onClick={() => this.deleteRoom()} >
+          <md-icon slot="icon">delete</md-icon>
+          Delete
+        </md-filled-tonal-button>
+        )}
+          
           <span class="stretch-fill"></span>
           <md-outlined-button id="cancel"
             onClick={() => this.editorClosed.emit("cancel")}>
             Cancel
           </md-outlined-button>
           <md-filled-button id="confirm" disabled={!this.isValid}
-            onClick={() => this.updateRoom()}
-          >
+            onClick={() => this.updateRoom()}>
             <md-icon slot="icon">save</md-icon>
             Save
           </md-filled-button>
@@ -144,7 +149,6 @@ export class VecnehladnyPremisesWlEditor {
 
   private async deleteRoom() {
     try {
-      console.log(this.buildingId, this.roomId)
       const response = await RoomsListApiFactory(undefined, this.apiBase).deleteRoomEntry(this.buildingId, this.roomId)
       if (response.status < 299) {
         this.editorClosed.emit("delete")

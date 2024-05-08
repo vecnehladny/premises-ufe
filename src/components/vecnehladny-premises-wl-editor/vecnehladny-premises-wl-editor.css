@@ -1,6 +1,9 @@
 :host {
   --_wl-editor_gap: var(--wl-gap, 0.5rem);
   height: 100%;
+  width: 980px;
+  display: block;
+  margin: 0 auto;
 }
 
 form {
@@ -10,6 +13,11 @@ form {
   font-weight: 900;
   text-align: center;
   }
+
+form md-filled-text-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
 
 .duration-slider {
   display: flex;

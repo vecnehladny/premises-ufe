@@ -26,6 +26,37 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError } from './base';
 /**
  * 
  * @export
+ * @interface Building
+ */
+export interface Building {
+    /**
+     * Unique identifier of the building
+     * @type {string}
+     * @memberof Building
+     */
+    'id': string;
+    /**
+     * Human-readable name of the building
+     * @type {string}
+     * @memberof Building
+     */
+    'name': string;
+    /**
+     * Physical address of the building
+     * @type {string}
+     * @memberof Building
+     */
+    'address': string;
+    /**
+     * 
+     * @type {Array<RoomEntry>}
+     * @memberof Building
+     */
+    'rooms'?: Array<RoomEntry>;
+}
+/**
+ * 
+ * @export
  * @interface RoomEntry
  */
 export interface RoomEntry {
@@ -54,6 +85,208 @@ export interface RoomEntry {
      */
     'capacity': number;
 }
+
+/**
+ * BuildingsApi - axios parameter creator
+ * @export
+ */
+export const BuildingsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Use this method to initialize a new building in the system.
+         * @summary Saves new building definition
+         * @param {Building} building Building details to store
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBuilding: async (building: Building, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'building' is not null or undefined
+            assertParamExists('createBuilding', 'building', building)
+            const localVarPath = `/building`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(building, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Use this method to delete the specific building from the system.
+         * @summary Deletes specific building
+         * @param {string} buildingId Pass the ID of the particular building
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteBuilding: async (buildingId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'buildingId' is not null or undefined
+            assertParamExists('deleteBuilding', 'buildingId', buildingId)
+            const localVarPath = `/building/{buildingId}`
+                .replace(`{${"buildingId"}}`, encodeURIComponent(String(buildingId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BuildingsApi - functional programming interface
+ * @export
+ */
+export const BuildingsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BuildingsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Use this method to initialize a new building in the system.
+         * @summary Saves new building definition
+         * @param {Building} building Building details to store
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createBuilding(building: Building, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Building>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBuilding(building, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Use this method to delete the specific building from the system.
+         * @summary Deletes specific building
+         * @param {string} buildingId Pass the ID of the particular building
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteBuilding(buildingId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteBuilding(buildingId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BuildingsApi - factory interface
+ * @export
+ */
+export const BuildingsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BuildingsApiFp(configuration)
+    return {
+        /**
+         * Use this method to initialize a new building in the system.
+         * @summary Saves new building definition
+         * @param {Building} building Building details to store
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBuilding(building: Building, options?: any): AxiosPromise<Building> {
+            return localVarFp.createBuilding(building, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Use this method to delete the specific building from the system.
+         * @summary Deletes specific building
+         * @param {string} buildingId Pass the ID of the particular building
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteBuilding(buildingId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteBuilding(buildingId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BuildingsApi - interface
+ * @export
+ * @interface BuildingsApi
+ */
+export interface BuildingsApiInterface {
+    /**
+     * Use this method to initialize a new building in the system.
+     * @summary Saves new building definition
+     * @param {Building} building Building details to store
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BuildingsApiInterface
+     */
+    createBuilding(building: Building, options?: AxiosRequestConfig): AxiosPromise<Building>;
+
+    /**
+     * Use this method to delete the specific building from the system.
+     * @summary Deletes specific building
+     * @param {string} buildingId Pass the ID of the particular building
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BuildingsApiInterface
+     */
+    deleteBuilding(buildingId: string, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+}
+
+/**
+ * BuildingsApi - object-oriented interface
+ * @export
+ * @class BuildingsApi
+ * @extends {BaseAPI}
+ */
+export class BuildingsApi extends BaseAPI implements BuildingsApiInterface {
+    /**
+     * Use this method to initialize a new building in the system.
+     * @summary Saves new building definition
+     * @param {Building} building Building details to store
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BuildingsApi
+     */
+    public createBuilding(building: Building, options?: AxiosRequestConfig) {
+        return BuildingsApiFp(this.configuration).createBuilding(building, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Use this method to delete the specific building from the system.
+     * @summary Deletes specific building
+     * @param {string} buildingId Pass the ID of the particular building
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BuildingsApi
+     */
+    public deleteBuilding(buildingId: string, options?: AxiosRequestConfig) {
+        return BuildingsApiFp(this.configuration).deleteBuilding(buildingId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
 
 /**
  * RoomsListApi - axios parameter creator

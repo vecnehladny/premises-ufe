@@ -38,12 +38,12 @@ export class VecnehladnyPremisesWlApp {
 
   render() {
     let element = "list"
-    let entryId = "@new"
+    let roomId = "@new"
   
-    if ( this.relativePath.startsWith("entry/"))
+    if ( this.relativePath.startsWith("room/"))
     {
       element = "editor";
-      entryId = this.relativePath.split("/")[1]
+      roomId = this.relativePath.split("/")[1]
     }
   
     const navigate = (path:string) => {
@@ -54,10 +54,9 @@ export class VecnehladnyPremisesWlApp {
     return (
       <Host>
         { element === "editor"
-        ? <vecnehladny-premises-wl-editor entry-id={entryId} building-id={this.buildingId} api-base={this.apiBase}
-            oneditor-closed={ () => navigate("./list")} >
+        ? <vecnehladny-premises-wl-editor room-id={roomId} building-id={this.buildingId} api-base={this.apiBase} oneditor-closed={ () => navigate("./list")} >
           </vecnehladny-premises-wl-editor>
-        : <vecnehladny-premises-wl-list building-id={this.buildingId} api-base={this.apiBase} onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></vecnehladny-premises-wl-list>
+        : <vecnehladny-premises-wl-list building-id={this.buildingId} room-id={roomId} api-base={this.apiBase} onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./room/" + ev.detail) } ></vecnehladny-premises-wl-list>
         }
   
       </Host>
