@@ -14,6 +14,7 @@ export class VecnehladnyPremisesWlApp {
   @State() private relativePath = "";
   @Prop() basePath: string="";
   @Prop() apiBase: string;
+  
   @Prop() buildingId: string;
 
    componentWillLoad() {
